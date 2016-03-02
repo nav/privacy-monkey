@@ -42,6 +42,8 @@
             this.lstOutputFiles = new System.Windows.Forms.ListBox();
             this.chkConfirm = new System.Windows.Forms.CheckBox();
             this.btnSend = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnSendOutlook = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +85,7 @@
             this.txtBank.Name = "txtBank";
             this.txtBank.Size = new System.Drawing.Size(441, 22);
             this.txtBank.TabIndex = 5;
+            this.txtBank.TextChanged += new System.EventHandler(this.txtBank_TextChanged);
             // 
             // label2
             // 
@@ -160,7 +163,7 @@
             // 
             this.chkConfirm.AutoSize = true;
             this.chkConfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkConfirm.Location = new System.Drawing.Point(87, 360);
+            this.chkConfirm.Location = new System.Drawing.Point(69, 358);
             this.chkConfirm.Name = "chkConfirm";
             this.chkConfirm.Size = new System.Drawing.Size(441, 20);
             this.chkConfirm.TabIndex = 1;
@@ -174,19 +177,44 @@
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSend.Image = ((System.Drawing.Image)(resources.GetObject("btnSend.Image")));
             this.btnSend.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSend.Location = new System.Drawing.Point(115, 401);
+            this.btnSend.Location = new System.Drawing.Point(69, 398);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(380, 45);
+            this.btnSend.Size = new System.Drawing.Size(214, 45);
             this.btnSend.TabIndex = 9;
-            this.btnSend.Text = "       Send email to Nav securely and anonymously";
+            this.btnSend.Text = "       Automatically send via email to Nav";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(289, 412);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(23, 16);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "or ";
+            // 
+            // btnSendOutlook
+            // 
+            this.btnSendOutlook.Enabled = false;
+            this.btnSendOutlook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendOutlook.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSendOutlook.Location = new System.Drawing.Point(318, 398);
+            this.btnSendOutlook.Name = "btnSendOutlook";
+            this.btnSendOutlook.Size = new System.Drawing.Size(214, 45);
+            this.btnSendOutlook.TabIndex = 11;
+            this.btnSendOutlook.Text = "Manually send email via outlook";
+            this.btnSendOutlook.UseVisualStyleBackColor = true;
+            this.btnSendOutlook.Click += new System.EventHandler(this.btnSendOutlook_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 477);
+            this.Controls.Add(this.btnSendOutlook);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.chkConfirm);
             this.Controls.Add(this.groupBox2);
@@ -218,6 +246,8 @@
         private System.Windows.Forms.ListBox lstOutputFiles;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblWait;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnSendOutlook;
     }
 }
 

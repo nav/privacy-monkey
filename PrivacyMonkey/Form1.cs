@@ -3,14 +3,10 @@ using System.IO;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 using ImageMagick;
+
 
 namespace PrivacyMonkey
 {
@@ -39,32 +35,9 @@ namespace PrivacyMonkey
         }
 
 
-        private void btnSelect_Click(object sender, EventArgs e)
+        private void ConversionRoutine()
         {
-            ofd.Filter = "PDF|*.pdf";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                selectedFile = ofd.FileName;
-                selectedSafeFile = ofd.SafeFileName;
-                txtSelectedFile.Text = selectedFile;
-                btnConvert.Enabled = true;
-            }
-        }
-
-        private void btnConvert_Click(object sender, EventArgs e)
-        {
-            bank = txtBank.Text;
-            if (bank == null || selectedFile == null)
-            {
-                MessageBox.Show(
-                    "Please enter bank name and statement file",
-                    "Missing Information",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-                return;
-            }
-
+            List<String> outputfiles_inner = new List<String>();
             MagickReadSettings settings = new MagickReadSettings();
 
             settings.Density = new PointD(300, 300);
@@ -80,19 +53,55 @@ namespace PrivacyMonkey
                 {
                     outputfile = String.Format(@"{0}\output-page-{1}.png", Path.GetDirectoryName(selectedFile), page);
                     image.Write(outputfile);
+                    //this.Invoke(new Action(() => outputfiles.Add(outputfile)));
                     outputfiles.Add(outputfile);
-                    displayOutputFiles();
-
                     procInfo.Arguments = outputfile;
                     System.Diagnostics.Process.Start(procInfo);
-
                     page++;
                 }
             }
 
+            this.Invoke((MethodInvoker)delegate {
+                btnConvert.Enabled = true;
+                lstOutputFiles.Items.Clear();
+                for (int i = 0; i < outputfiles.Count; i++)
+                {
+                    lstOutputFiles.Items.Add(outputfiles[i]);
+                }
+            });
+        }
 
 
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            ofd.Filter = "PDF|*.pdf";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                selectedFile = ofd.FileName;
+                selectedSafeFile = ofd.SafeFileName;
+                txtSelectedFile.Text = selectedFile;
+                btnConvert.Enabled = true;
+            }
+        }
 
+        private void btnConvert_Click(object sender, EventArgs e)
+        {
+            bank = txtBank.Text;
+            if (bank == "" || selectedFile == null)
+            {
+                MessageBox.Show(
+                    "Please enter bank name and statement file",
+                    "Missing Information",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            btnConvert.Enabled = false;
+            ThreadStart threadStart = new ThreadStart(ConversionRoutine);
+            Thread thread = new Thread(threadStart);
+            thread.Start();
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -104,6 +113,7 @@ namespace PrivacyMonkey
             })
             {
                 btnSend.Enabled = false;
+                btnSendOutlook.Enabled = false;
                 for (int i = 0; i < outputfiles.Count; i++)
                 {
                     message.Attachments.Add(new Attachment(outputfiles[i]));
@@ -111,21 +121,39 @@ namespace PrivacyMonkey
                 smtp.Send(message);
                 MessageBox.Show("Email sent successfully. Thanks for your help!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnSend.Enabled = true;
+                btnSendOutlook.Enabled = true;
             }
+        }
+
+        private void btnSendOutlook_Click(object sender, EventArgs e)
+        {
+            int count = outputfiles.Count;
+            int remaining = count - 1;
+
+            if (count > 1)
+            {
+                MessageBox.Show(
+                    "Since there are " + count + " files generated, outlook can only attach one file automatically. Please attach the remaining " + remaining + " file(s) manually.",
+                    "Missing Information",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            System.Diagnostics.ProcessStartInfo procInfo = new System.Diagnostics.ProcessStartInfo();
+            procInfo.FileName = ("outlook.exe");
+            procInfo.Arguments = "/a " + outputfiles[0] + " /c ipm.note /m \"nav@navaulakh.com&subject=Here's a sample statement\"";
+            System.Diagnostics.Process.Start(procInfo);
+        }
+
+        private void txtBank_TextChanged(object sender, EventArgs e)
+        {
+            btnConvert.Enabled = txtBank.Text != "" && selectedFile != null;
         }
 
         private void chkConfirm_CheckedChanged(object sender, EventArgs e)
         {
             btnSend.Enabled = chkConfirm.Checked && outputfiles.Count > 0;
-        }
-
-        private void displayOutputFiles()
-        {
-            lstOutputFiles.Items.Clear();
-            for (int i = 0; i < outputfiles.Count; i++)
-            {
-                lstOutputFiles.Items.Add(outputfiles[i]);
-            }
+            btnSendOutlook.Enabled = chkConfirm.Checked && outputfiles.Count > 0;
         }
     }
 }
