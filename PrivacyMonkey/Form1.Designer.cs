@@ -51,9 +51,9 @@
             // btnSelect
             // 
             this.btnSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelect.Location = new System.Drawing.Point(128, 76);
+            this.btnSelect.Location = new System.Drawing.Point(160, 75);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(88, 23);
+            this.btnSelect.Size = new System.Drawing.Size(72, 23);
             this.btnSelect.TabIndex = 1;
             this.btnSelect.Text = "Select file";
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -62,10 +62,10 @@
             // txtSelectedFile
             // 
             this.txtSelectedFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSelectedFile.Location = new System.Drawing.Point(231, 76);
+            this.txtSelectedFile.Location = new System.Drawing.Point(247, 76);
             this.txtSelectedFile.Name = "txtSelectedFile";
             this.txtSelectedFile.ReadOnly = true;
-            this.txtSelectedFile.Size = new System.Drawing.Size(338, 22);
+            this.txtSelectedFile.Size = new System.Drawing.Size(322, 22);
             this.txtSelectedFile.TabIndex = 3;
             // 
             // label1
@@ -74,16 +74,16 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(15, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 16);
+            this.label1.Size = new System.Drawing.Size(116, 16);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Bank";
+            this.label1.Text = "Bank / Credit Card";
             // 
             // txtBank
             // 
             this.txtBank.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBank.Location = new System.Drawing.Point(128, 36);
+            this.txtBank.Location = new System.Drawing.Point(160, 36);
             this.txtBank.Name = "txtBank";
-            this.txtBank.Size = new System.Drawing.Size(441, 22);
+            this.txtBank.Size = new System.Drawing.Size(409, 22);
             this.txtBank.TabIndex = 5;
             this.txtBank.TextChanged += new System.EventHandler(this.txtBank_TextChanged);
             // 
@@ -124,7 +124,7 @@
             // 
             this.btnConvert.Enabled = false;
             this.btnConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConvert.Location = new System.Drawing.Point(128, 122);
+            this.btnConvert.Location = new System.Drawing.Point(160, 122);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(131, 23);
             this.btnConvert.TabIndex = 7;
